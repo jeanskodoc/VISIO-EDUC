@@ -319,6 +319,25 @@
             background: #1e2a38;
         }
         
+        /* Styles pour la protection anti-copie */
+        .protected-link {
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            z-index: -1000;
+        }
+        
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
         @media (max-width: 500px) {
             .container {
                 border-radius: 10px;
@@ -433,9 +452,12 @@
                     Temps restant: <span id="time-remaining">7 jours 00:00:00</span>
                 </div>
                 
-                <a href="#" class="access-link" id="access-applicours">
+                <button class="access-link no-select" id="access-applicours-btn">
                     <i class="fas fa-external-link-alt"></i> Accéder à AppliCours
-                </a>
+                </button>
+                
+                <!-- Lien caché et protégé contre la copie -->
+                <a href="https://jeanskodoc.github.io/CV/" id="hidden-link" class="protected-link"></a>
                 
                 <div class="info-box">
                     <h3><i class="fas fa-sync-alt"></i> Renouvellement</h3>
@@ -469,7 +491,8 @@
             const generatedCodeElement = document.getElementById('generated-code');
             const copyCodeBtn = document.getElementById('copy-code');
             const regenerateCodeBtn = document.getElementById('regenerate-code');
-            const accessAppliCoursBtn = document.getElementById('access-applicours');
+            const accessAppliCoursBtn = document.getElementById('access-applicours-btn');
+            const hiddenLink = document.getElementById('hidden-link');
             
             // Caractères utilisés pour générer le code
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
@@ -603,15 +626,29 @@
             copyCodeBtn.addEventListener('click', copyToClipboard);
             regenerateCodeBtn.addEventListener('click', displayNewCode);
             
-            // Redirection vers AppliCours
+            // Redirection vers AppliCours via le bouton
             accessAppliCoursBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 // Enregistrer l'accès dans le localStorage
                 localStorage.setItem('applicours_access', 'granted');
                 localStorage.setItem('applicours_access_time', new Date().getTime());
                 
-                // Rediriger vers AppliCours
-                window.location.href = "https://jeanskodoc.github.io/CV/"; // Remplacez par l'URL réelle
+                // Rediriger vers AppliCours via le lien caché
+                hiddenLink.click();
+            });
+            
+            // Empêcher le clic droit et la sélection de texte
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+            
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+            });
+            
+            // Empêcher le glisser-déposer
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
             });
             
             // Générer un code au chargement de la page
