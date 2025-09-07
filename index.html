@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>visioEduc - Accès à la plateforme éducative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        
+        .btn-payment {
+            background: #ff6b35;
+            color: white;
+        }
+        
+        .btn-payment:hover {
+            background: #e85a2a;
+        }
+        
+        .access-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .access-link {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #2ecc71;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .access-link:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .timer {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .timer span {
+            color: #e74c3c;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .payment-section {
+            text-align: center;
+            padding: 20px;
+            background: #fff8f5;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 5px solid #ff6b35;
+        }
+        
+        .payment-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .pricing {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin: 15px 0;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features i {
+            color: #2ecc71;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success {
+            color: #2ecc71;
+            font-size: 1rem;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+        
+        .code-generator {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .generated-code {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 5px;
+            color: #2c3e50;
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .code-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .code-copy {
+            background: #3498db;
+            color: white;
+        }
+        
+        .code-copy:hover {
+            background: #2980b9;
+        }
+        
+        .code-regenerate {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .code-regenerate:hover {
+            background: #1e2a38;
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .code-actions {
+                flex-direction: column;
+            }
+            
+            .generated-code {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> visioEduc</h1>
+            <p>Plateforme d'éducation en ligne premium</p>
+        </div>
+        
+        <div class="content">
+            <div id="login-form">
+                <div class="info-box">
+                    <h3><i class="fas fa-info-circle"></i> Accès sécurisé</h3>
+                    <p>Après paiement de vos frais, saisissez vos identifiants ci-dessous pour accéder à la plateforme. Votre accès est valable 7 jours à compter de votre première connexion.</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Adresse email</label>
+                    <input type="email" id="email" class="form-control" placeholder="saisissez votre email">
+                    <div class="error" id="email-error">Veuillez saisir une adresse email valide</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="access-code">Code d'accès</label>
+                    <input type="text" id="access-code" class="form-control" placeholder="saisissez votre code d'accès">
+                    <div class="error" id="code-error">Code d'accès incorrect</div>
+                </div>
+                
+                <button id="login-btn" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Accéder à la plateforme
+                </button>
+                
+                <div class="success" id="login-success">Authentification réussie! Redirection en cours...</div>
+                
+                <div class="code-generator">
+                    <h3><i class="fas fa-key"></i> Générateur de code d'accès</h3>
+                    <p>Générez un code sécurisé pour accéder à la plateforme</p>
+                    
+                    <div class="generated-code" id="generated-code">-----</div>
+                    
+                    <div class="code-actions">
+                        <button class="code-btn code-copy" id="copy-code">
+                            <i class="fas fa-copy"></i> Copier le code
+                        </button>
+                        <button class="code-btn code-regenerate" id="regenerate-code">
+                            <i class="fas fa-sync-alt"></i> Régénérer
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="divider">
+                    <span>OU</span>
+                </div>
+                
+                <div class="payment-section">
+                    <h3><i class="fas fa-credit-card"></i> Accédez à visioEduc</h3>
+                    <p>Obtenez un accès immédiat à tous nos contenus premium</p>
+                    
+                    <div class="pricing">
+                        7 900 FCFA / 7 jours
+                    </div>
+                    
+                    <div class="features">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Accès à tous les cours en ligne</li>
+                            <li><i class="fas fa-check-circle"></i> Support pédagogique 7j/7</li>
+                            <li><i class="fas fa-check-circle"></i> Ressources téléchargeables</li>
+                            <li><i class="fas fa-check-circle"></i> Certificat de participation</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://me.fedapay.com/9LIValBW" target="_blank" class="btn btn-payment">
+                        <i class="fas fa-lock"></i> Payer maintenant
+                    </a>
+                    
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: #7f8c8d;">
+                        <i class="fas fa-shield-alt"></i> Paiement sécurisé par FedaPay
+                    </p>
+                </div>
+            </div>
+            
+            <div id="access-granted" class="access-container">
+                <h2><i class="fas fa-check-circle"></i> Accès autorisé</h2>
+                <p>Votre accès à la plateforme visioEduc a été activé avec succès.</p>
+                
+                <div class="timer">
+                    Temps restant: <span id="time-remaining">7 jours 00:00:00</span>
+                </div>
+                
+                <a href="#" class="access-link" id="access-applicours">
+                    <i class="fas fa-external-link-alt"></i> Accéder à AppliCours
+                </a>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-sync-alt"></i> Renouvellement</h3>
+                    <p>Votre accès expire dans 7 jours. Vous pourrez le renouveler à tout moment depuis votre espace client.</p>
+                </div>
+                
+                <a href="https://me.fedapay.com/9LIValBW" target="_blank" class="btn btn-success">
+                    <i class="fas fa-sync-alt"></i> Renouveler l'accès
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>visioEduc &copy; 2023 - Tous droits réservés</p>
+            <p><i class="fas fa-lock"></i> Plateforme sécurisée</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Références aux éléments du DOM
+            const loginForm = document.getElementById('login-form');
+            const accessGranted = document.getElementById('access-granted');
+            const emailInput = document.getElementById('email');
+            const codeInput = document.getElementById('access-code');
+            const loginBtn = document.getElementById('login-btn');
+            const emailError = document.getElementById('email-error');
+            const codeError = document.getElementById('code-error');
+            const loginSuccess = document.getElementById('login-success');
+            const timeRemaining = document.getElementById('time-remaining');
+            const generatedCodeElement = document.getElementById('generated-code');
+            const copyCodeBtn = document.getElementById('copy-code');
+            const regenerateCodeBtn = document.getElementById('regenerate-code');
+            const accessAppliCoursBtn = document.getElementById('access-applicours');
+            
+            // Caractères utilisés pour générer le code
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
+            
+            // Données de test (en production, cela viendrait d'une base de données)
+            const validUsers = [
+                { email: 'client@example.com', code: 'VISIO2023', expiry: null },
+                { email: 'etudiant@ecole.fr', code: 'EDUC789', expiry: null }
+            ];
+            
+            // Générer un code aléatoire de 6 caractères
+            function generateRandomCode() {
+                let result = '';
+                const charactersLength = characters.length;
+                for (let i = 0; i < 6; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+            
+            // Afficher un nouveau code
+            function displayNewCode() {
+                const newCode = generateRandomCode();
+                generatedCodeElement.textContent = newCode;
+                
+                // Remplir automatiquement le champ de code
+                codeInput.value = newCode;
+            }
+            
+            // Copier le code dans le presse-papier
+            function copyToClipboard() {
+                const code = generatedCodeElement.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    // Afficher une confirmation
+                    const originalText = copyCodeBtn.innerHTML;
+                    copyCodeBtn.innerHTML = '<i class="fas fa-check"></i> Code copié!';
+                    
+                    setTimeout(() => {
+                        copyCodeBtn.innerHTML = originalText;
+                    }, 2000);
+                });
+            }
+            
+            // Fonction pour vérifier les identifiants
+            function checkCredentials(email, code) {
+                return validUsers.some(user => user.email === email && user.code === code);
+            }
+            
+            // Fonction pour formater le temps restant
+            function formatTimeRemaining(endDate) {
+                const now = new Date();
+                const timeLeft = endDate - now;
+                
+                if (timeLeft <= 0) {
+                    return "Accès expiré";
+                }
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                return `${days} jours ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Fonction pour démarrer le compte à rebours
+            function startCountdown(endDate) {
+                // Mettre à jour immédiatement
+                timeRemaining.textContent = formatTimeRemaining(endDate);
+                
+                // Mettre à jour toutes les secondes
+                const countdownInterval = setInterval(() => {
+                    const timeLeft = formatTimeRemaining(endDate);
+                    timeRemaining.textContent = timeLeft;
+                    
+                    if (timeLeft === "Accès expiré") {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+            }
+            
+            // Gestion de la connexion
+            loginBtn.addEventListener('click', function() {
+                const email = emailInput.value.trim();
+                const code = codeInput.value.trim();
+                let isValid = true;
+                
+                // Réinitialiser les messages d'erreur
+                emailError.style.display = 'none';
+                codeError.style.display = 'none';
+                
+                // Validation de l'email
+                if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                    emailError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validation du code
+                if (!code) {
+                    codeError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    if (checkCredentials(email, code)) {
+                        // Authentification réussie
+                        loginSuccess.style.display = 'block';
+                        
+                        // Simuler un délai de traitement
+                        setTimeout(() => {
+                            loginForm.style.display = 'none';
+                            accessGranted.style.display = 'block';
+                            
+                            // Définir la date d'expiration (7 jours à partir de maintenant)
+                            const expiryDate = new Date();
+                            expiryDate.setDate(expiryDate.getDate() + 7);
+                            
+                            // Stocker la date d'expiration dans le localStorage
+                            localStorage.setItem('visioeduc_expiry', expiryDate.getTime());
+                            
+                            // Démarrer le compte à rebours
+                            startCountdown(expiryDate);
+                        }, 1500);
+                    } else {
+                        codeError.style.display = 'block';
+                    }
+                }
+            });
+            
+            // Gestion des événements
+            copyCodeBtn.addEventListener('click', copyToClipboard);
+            regenerateCodeBtn.addEventListener('click', displayNewCode);
+            
+            // Redirection vers AppliCours
+            accessAppliCoursBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Enregistrer l'accès dans le localStorage
+                localStorage.setItem('applicours_access', 'granted');
+                localStorage.setItem('applicours_access_time', new Date().getTime());
+                
+                // Rediriger vers AppliCours
+                window.location.href = "appliCours.html"; // Remplacez par l'URL réelle
+            });
+            
+            // Générer un code au chargement de la page
+            displayNewCode();
+            
+            // Vérifier s'il y a déjà une session active
+            const savedExpiry = localStorage.getItem('visioeduc_expiry');
+            if (savedExpiry) {
+                const expiryDate = new Date(parseInt(savedExpiry));
+                const now = new Date();
+                
+                if (now < expiryDate) {
+                    // Session toujours valide
+                    loginForm.style.display = 'none';
+                    accessGranted.style.display = 'block';
+                    startCountdown(expiryDate);
+                } else {
+                    // Session expirée
+                    localStorage.removeItem('visioeduc_expiry');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
